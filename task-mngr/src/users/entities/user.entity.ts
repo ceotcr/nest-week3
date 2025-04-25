@@ -1,4 +1,3 @@
-import { Expose } from "class-transformer";
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()

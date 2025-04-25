@@ -1,4 +1,3 @@
-// auth.middleware.factory.ts
 import { Request, Response, NextFunction } from 'express';
 import { DataSource } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
