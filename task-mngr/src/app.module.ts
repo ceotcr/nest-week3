@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { createAuthMiddleware } from './common/middlewares/auth.middleware';
 import { TasksController } from './tasks/tasks.controller';
 import { DataSource } from 'typeorm';
+import { loggerMiddleware } from './common/middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -34,6 +35,6 @@ export class AppModule implements NestModule {
   constructor(private dataSource: DataSource) { }
 
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(createAuthMiddleware(this.dataSource)).forRoutes(TasksController)
+    consumer.apply(createAuthMiddleware(this.dataSource)).forRoutes(TasksController).apply(loggerMiddleware).forRoutes("*");
   }
 }

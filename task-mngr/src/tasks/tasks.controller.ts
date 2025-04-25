@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Req, UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Req, UsePipes, ValidationPipe, UseGuards, Query } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -15,7 +15,10 @@ export class TasksController {
   }
 
   @Get()
-  findAll() {
+  get(@Query('search') search: string) {
+    if (search) {
+      return this.tasksService.search(search);
+    }
     return this.tasksService.findAll();
   }
 

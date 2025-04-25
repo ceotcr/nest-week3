@@ -46,4 +46,12 @@ export class TasksService {
   async findByUserId(userId: number) {
     return this.taskRepository.find({ where: { createdBy: { id: userId } }, relations: { createdBy: true } });
   }
+
+  async search(query: string) {
+    return this.taskRepository.createQueryBuilder('task')
+      .leftJoinAndSelect('task.createdBy', 'user')
+      .where('task.title LIKE :query OR task.description LIKE :query', { query: `%${query}%` })
+      .orWhere('user.username LIKE :query', { query: `%${query}%` })
+      .getMany();
+  }
 }
